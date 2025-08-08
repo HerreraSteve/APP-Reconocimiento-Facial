@@ -1,0 +1,8 @@
+#instalación de librerías
+pip install -r requirements.txt
+
+#Generación de modelo
+python train_model.py
+
+#Ejecución de aplicación
+python app_tesis.py
