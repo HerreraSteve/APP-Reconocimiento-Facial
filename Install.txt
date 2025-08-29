@@ -6,3 +6,8 @@ python train_model.py
 
 #Ejecución de aplicación
 python app_tesis.py
+
+#Instalador
+pip install pyinstaller
+
+python -m PyInstaller --onefile app_estres.py
