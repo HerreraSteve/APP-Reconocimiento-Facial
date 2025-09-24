@@ -80,8 +80,11 @@ def mostrar_alerta(frame, mensaje="⚠ Pausa activa recomendada!"):
     cv2.imshow("Deteccion Estrés / Fatiga / Somnolencia", frame)
     beep()
     while True:
+        # Detectar cierre con X
+        if cv2.getWindowProperty("Deteccion Estrés / Fatiga / Somnolencia", cv2.WND_PROP_VISIBLE) < 1:
+            break
         key = cv2.waitKey(1) & 0xFF
-        if key == 13:  # Enter
+        if key in [13, 27]:  # Enter o ESC
             break
 
 # --- Landmarks ---
@@ -95,7 +98,7 @@ CLOSED_FRAMES = 15
 MAR_THRESH = 0.6
 PITCH_THRESH = 15
 
-VENTANA_TIEMPO = 15  # segundos (5 minutos)
+VENTANA_TIEMPO = 15  # segundos
 UMBRAL_EVENTOS = 100
 eventos = []
 
@@ -180,7 +183,9 @@ while cap.isOpened():
         eventos = [t for t in eventos if ahora - t <= VENTANA_TIEMPO]
 
     cv2.imshow("Deteccion Estrés / Fatiga / Somnolencia", frame)
-    if cv2.waitKey(1) & 0xFF == 27:
+
+    # Salir con ESC o con la X
+    if cv2.waitKey(1) & 0xFF == 27 or cv2.getWindowProperty("Deteccion Estrés / Fatiga / Somnolencia", cv2.WND_PROP_VISIBLE) < 1:
         break
 
 cap.release()
